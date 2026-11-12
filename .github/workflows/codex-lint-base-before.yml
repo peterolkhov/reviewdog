@@ -11,10 +11,12 @@ jobs:
     env:
       GOTOOLCHAIN: local
       GOFLAGS: -mod=readonly
-      GOCACHE: ${{ runner.temp }}/devtools45-go-cache
-      GOMODCACHE: ${{ runner.temp }}/devtools45-go-mod
-      GOPATH: ${{ runner.temp }}/devtools45-go-path
     steps:
+      - name: Initialize task-owned Go paths on the runner
+        run: |
+          echo "GOCACHE=$RUNNER_TEMP/devtools45-go-cache" >> "$GITHUB_ENV"
+          echo "GOMODCACHE=$RUNNER_TEMP/devtools45-go-mod" >> "$GITHUB_ENV"
+          echo "GOPATH=$RUNNER_TEMP/devtools45-go-path" >> "$GITHUB_ENV"
       - name: Checkout whole pinned upstream with history
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:
